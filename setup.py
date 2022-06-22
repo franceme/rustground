@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # region Imports
-import pathlib,
+import pathlib
 from fileinput import FileInput as finput
 import os
 import sys
