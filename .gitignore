@@ -1,3 +1,7 @@
 dist/
 build/
 package_name/__pycache__/
+dock.py
+*.rs
+rustground/__pycache__/
+*.egg-info/
