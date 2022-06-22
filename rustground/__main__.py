@@ -43,6 +43,21 @@ def compile(filecontents, format:str="hir"):
     except Exception as e:
         return f"""Exception @ {format}:> {e}"""
 
+def save(filecontents):
+    try:
+        if filecontents:
+            resp = requests.post("https://play.rust-lang.org/meta/gist", json={
+                "code": '\n'.join(filecontents),
+            }).json()
+            playground, gist = "https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=" + resp['id'], resp['url']
+            return f"""SAVED
+============
+GIST :>       {playground}
+PlayGround :> {gist}
+"""
+    except Exception as e:
+        return f"""Exception @ {format}:> {e}"""
+
 
 def main():
     parser, output = argparse.ArgumentParser("RustGround - Upload Contents of Rust files to the Rust playground, and grab their output"),""
@@ -52,6 +67,7 @@ def main():
     parser.add_argument("--asm", help="Show the ASM Output", action="store_true")
     parser.add_argument("--llvm", help="Show the LLVM Output", action="store_true")
     parser.add_argument("--wasm", help="Show the WASM Output", action="store_true")
+    parser.add_argument("--save", help="Save the Rust PlayGround", action="store_true")
 
     args = parser.parse_args()
 
@@ -72,7 +88,9 @@ def main():
             output += "\n" + compile(contents,"llvm-ir")
         if args.wasm:
             output += "\n" + compile(contents,"wasm")
-    
+        if args.save:
+            output += "\n" + save(contents)
+
     print(output)
 
 if __name__ == '__main__':

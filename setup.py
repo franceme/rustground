@@ -21,7 +21,7 @@ URL = f"https://github.com/{GH_NAME}/{NAME}"
 long_description = pathlib.Path(f"{here}/README.md").read_text(encoding='utf-8')
 REQUIRES_PYTHON = '>=3.8.0'
 RELEASE = "?"
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 
 def grab_version(update_patch:bool=False,update_minor:bool=False,update_major:bool=False):
 	update = any([update_patch,update_minor,update_major])
